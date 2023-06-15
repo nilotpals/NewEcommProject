@@ -43,7 +43,7 @@ function Login()
         {
             submitDetails();
         }
-    },[formErrors]); 
+    },[formErrors,isSubmit]); 
 
     const submitDetails = async () => {
         try{
@@ -55,8 +55,13 @@ function Login()
                 }
             });
             result = await result.json();
-         //   console.log(result);
-         //   history("/home");
+            if(result.auth){
+                localStorage.setItem('user', JSON.stringify(result.user));
+                localStorage.setItem('token', JSON.stringify(result.token));
+                history("/");
+            } else {
+                alert("Please enter correct details");
+            }
         } catch (e){
             console.log("Invalid username or password");
         }

@@ -73,7 +73,13 @@ function Register()
                 }
             });
             result = await result.json();
-            history("/login");
+            if(result.auth){
+                localStorage.setItem('user', JSON.stringify(result.result));
+                localStorage.setItem('token', JSON.stringify(result.token));
+                history("/");
+            } else {
+                alert("Please enter correct details");
+            }
         } catch (e){
             console.log("Not Registered");
         }
